@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "vrush-tf-state-bucket"
+    bucket         = "sctp-ce10-tfstate"
     key            = "vrush-dynamodb-tfstate"
     region         = "ap-southeast-1"
    
