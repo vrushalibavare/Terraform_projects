@@ -10,10 +10,10 @@ output "ec2_public_dns" {
 
 output "dynamodb_table_name" {
   description = "Name of the DynamoDB table"
-  value       = module.dynamodb.dynamodb_table_name
+  value       = module.dynamodb.table_name
 }
 
 output "dynamodb_table_arn" {
   description = "ARN of the DynamoDB table"
-  value       = module.dynamodb.dynamodb_table_arn
+  value       = module.dynamodb.table_arn
 }

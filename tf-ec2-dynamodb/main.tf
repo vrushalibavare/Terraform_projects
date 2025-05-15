@@ -45,23 +45,26 @@ resource "aws_iam_policy" "dynamodb_access" {
     Version = "2012-10-17"
     Statement = [
       {
+        Effect = "Allow"
+        Action = [
+          "dynamodb:ListTables",
+          "dynamodb:DescribeTable"
+        ]
+        Resource = "*"
+      },
+      {
+        Effect = "Allow"
         Action = [
           "dynamodb:GetItem",
           "dynamodb:PutItem",
           "dynamodb:UpdateItem",
           "dynamodb:DeleteItem",
+          "dynamodb:Query",
           "dynamodb:Scan",
-          "dynamodb:Query"
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem"
         ]
-        Effect   = "Allow"
-        Resource = module.dynamodb.dynamodb_table_arn
-      },
-      {
-        Action = [
-          "dynamodb:ListTables"
-        ]
-        Effect   = "Allow"
-        Resource = "*"
+        Resource = module.dynamodb.table_arn
       }
     ]
   })
