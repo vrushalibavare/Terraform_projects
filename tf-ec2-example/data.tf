@@ -1,7 +1,7 @@
 data "aws_vpc" "selected" {
   filter {
     name   = "tag:Name"
-    values = ["c10_learner_vpc"]
+    values = ["vrushali-vpc"]
   }
 }
 
@@ -26,6 +26,6 @@ data aws_subnet "selected" {
 
   filter {
     name   = "tag:Name"
-    values = ["c10_learner_vpc-public-ap-southeast-1a"]
+    values = ["vru*public*-1a"]
   }
 }
