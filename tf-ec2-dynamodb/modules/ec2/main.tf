@@ -7,19 +7,10 @@ resource "aws_instance" "public" {
   iam_instance_profile = var.iam_instance_profile
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
   
-  # Enable IMDSv2
-  # metadata_options block configures the instance metadata service
-  #metadata_options {
-    # Enable the instance metadata service endpoint
-    #http_endpoint = "enabled"
-    # Require the use of IMDSv2 tokens for all metadata requests
-    #http_tokens   = "required"  # This enforces IMDSv2
-    # Set the hop limit for PUT requests to the metadata service
-    #http_put_response_hop_limit = 2  # Increased to allow metadata access
-  #}
+
   
   tags = {
-    Name = "${var.name}-ec2"
+    Name = "${var.name}-tf-ec2"
   }
 }
 
