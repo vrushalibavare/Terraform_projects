@@ -41,8 +41,8 @@ resource "aws_iam_instance_profile" "instance_profile_example" {
 
 # resource "aws_iam_role_policy" "inline-policy-example" {
 #   name = "${local.name_prefix}-inline-policy"
-#   role = aws_iam_role.role_example.name
-#   policy = jsonencode({
+#   role = aws_iam_role.role-example.name
+#   policy = jsondecode({
 #     version = "2012-10-17"
 #     statement = [
 #       {
@@ -62,7 +62,7 @@ resource "aws_iam_instance_profile" "instance_profile_example" {
 # Option 3 - Using the policy inline heredoc
 # resource "aws_iam_role_policy" "inline-heredoc-policy-example" {
 #   name = "${local.name_prefix}-inline-heredoc-policy"
-#   role = aws_iam_role.role_example.name
+#   role = aws_iam_role.role-example.name
 #   policy = <<EOF
 # {
 #   "Version": "2012-10-17",
