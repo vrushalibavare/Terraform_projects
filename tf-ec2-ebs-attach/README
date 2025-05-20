@@ -1,0 +1,2 @@
+This project allows to make an EBS volume and attach it to an EC2 instance
+This project makes use of the existing tf-ec2_example project to launch an EC2 instance

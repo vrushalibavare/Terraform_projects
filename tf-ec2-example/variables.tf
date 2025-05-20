@@ -13,3 +13,9 @@ variable instance_type {
   description = "SSH key name"
    
  }
+
+variable "user_data" {
+  type        = string
+  description = "User data script for the EC2 instance"
+  default     = ""
+}

@@ -5,6 +5,7 @@ resource "aws_instance" "public" {
   associate_public_ip_address = true
   key_name = var.key_name
   vpc_security_group_ids = [ aws_security_group.allow_ssh.id ]
+  user_data = var.user_data
   tags = {
     Name = "${var.name}-ec2"
   }
@@ -31,4 +32,11 @@ output "instance_publicip" {
 }
 output "instance_publicdns" {
   value = aws_instance.public.public_dns
+}
+output "instance_id" {
+  value = aws_instance.public.id
+}
+
+output "instance_az" {
+  value = aws_instance.public.availability_zone
 }
