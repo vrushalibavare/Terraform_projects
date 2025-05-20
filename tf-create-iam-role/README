@@ -1,0 +1,19 @@
+This project makes a role to be assumed by the EC2 service.
+The policy attached to this role is for Describing EC2 instances and listing S3 buckets.
+The policy has been attached using datasource(policydocument), inline and heredoc formats
+Testing is performed by launching an EC2 instance ans testing the permissions using the following commands
+#aws ec2 describe-instances
+
+#
+
+#aws s3 ls
+
+#
+
+#aws s3api create-bucket \
+
+# --bucket <bucket-name> \
+
+# --region <region> -- \
+
+# create-bucket-configuration LocationConstraint=<region>
