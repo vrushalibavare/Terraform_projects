@@ -8,7 +8,8 @@ data "aws_iam_policy_document" "ec2_s3_list_policy" {
   }
   statement {
     actions = [
-      "s3:ListBucket"
+      "s3:ListBucket",
+      "s3:ListAllMyBuckets",
     ]
     resources = ["*"]
   }
