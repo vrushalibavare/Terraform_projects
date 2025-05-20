@@ -1,0 +1,3 @@
+This project creates a user
+Attaches policies to the user using the policy document method
+Policy allows create and maintain EC2 instances , create S3 buckets and view RDS instances
