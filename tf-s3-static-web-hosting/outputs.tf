@@ -1,10 +1,9 @@
-
-output "s3_bucket_name" {
-  description = "Name of the S3 bucket"
-  value       = aws_s3_bucket.static_bucket.id
+output "website_endpoint" {
+  description = "The website endpoint URL"
+  value       = "http://${aws_s3_bucket.static_bucket.bucket}"
 }
 
-output "s3_bucket_arn" {
-  description = "ARN of the S3 bucket"
-  value       = aws_s3_bucket.static_bucket.arn
+output "bucket_name" {
+  description = "The name of the S3 bucket"
+  value       = aws_s3_bucket.static_bucket.bucket
 }

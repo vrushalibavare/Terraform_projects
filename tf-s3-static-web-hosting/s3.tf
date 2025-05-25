@@ -36,3 +36,21 @@ resource aws_route53_record "www" {
     evaluate_target_health = true
   }
 }
+
+# This resource will execute the upload script after the S3 bucket is created
+resource "null_resource" "upload_to_s3" {
+  depends_on = [
+    aws_s3_bucket.static_bucket,
+    aws_s3_bucket_policy.allow_read_access,
+    aws_s3_bucket_website_configuration.website
+  ]
+
+  provisioner "local-exec" {
+    command = "chmod +x ${path.module}/upload_to_s3.sh && ${path.module}/upload_to_s3.sh"
+  }
+
+  # This ensures the script runs on every apply
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+}
