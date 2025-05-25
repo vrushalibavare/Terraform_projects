@@ -1,7 +1,9 @@
 locals {
   selected_subnet_ids = var.public_subnet ? data.aws_subnets.public.ids : data.aws_subnets.private.ids
 }
+#If var.public_subnet is true, it uses data.aws_subnets.public.ids
 
+#If var.public_subnet is false, it uses data.aws_subnets.private.ids
 
 resource "aws_instance" "web_app" {
   count         = var.instance_count
@@ -9,6 +11,7 @@ resource "aws_instance" "web_app" {
   instance_type = var.instance_type
   key_name = var.key_name
   subnet_id     = local.selected_subnet_ids[count.index % length(local.selected_subnet_ids)]
+  #This line implements a round-robin distribution pattern for EC2 instances across available subnets
 
   vpc_security_group_ids      = [aws_security_group.webapp.id]
   user_data = templatefile("${path.module}/init-script.sh", 
@@ -17,7 +20,7 @@ resource "aws_instance" "web_app" {
     
   })
 
-  associate_public_ip_address = true
+  associate_public_ip_address = false
  
   tags = {
     Name = "${var.name_prefix}-webapp-${count.index + 1}"
