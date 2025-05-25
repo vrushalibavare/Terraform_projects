@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to upload data from local downloads/static-web-hosting folder to S3 bucket
+# Script to upload data from local  folder to S3 bucket
 # Usage: ./upload_to_s3.sh
 
 # Get the bucket name from Terraform state
