@@ -26,7 +26,7 @@ variable "vpc_id" {
 variable "public_subnet" {
   description = "Whether to create resources in a public subnet"
   type        = bool
-  default     = true
+  default     = false
   
 }
 

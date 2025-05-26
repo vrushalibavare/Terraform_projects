@@ -20,7 +20,8 @@ resource "aws_instance" "web_app" {
     
   })
 
-  associate_public_ip_address = true
+  # Only assign public IPs to instances in public subnets
+  associate_public_ip_address = var.public_subnet
  
   tags = {
     Name = "${var.name_prefix}-webapp-${count.index + 1}"
