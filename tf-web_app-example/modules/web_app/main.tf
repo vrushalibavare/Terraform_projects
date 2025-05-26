@@ -20,7 +20,7 @@ resource "aws_instance" "web_app" {
     
   })
 
-  associate_public_ip_address = false
+  associate_public_ip_address = true
  
   tags = {
     Name = "${var.name_prefix}-webapp-${count.index + 1}"
@@ -73,8 +73,9 @@ resource "aws_lb_target_group" "web_app" {
   vpc_id = data.aws_vpc.selected.id
   health_check {
     port = 80
-    interval = 5
-    timeout = 3
+    protocol = "HTTP"
+    interval = 30
+    timeout = 5
     }
 }
 
@@ -85,16 +86,5 @@ resource "aws_lb_target_group_attachment" "web_app" {
   port = 80
 }
 
-resource "aws_alb_listener_rule" "web_app" {
-  listener_arn = var.alb_listener_arn
-  priority     = 10
-  action {
-    type = "forward"
-    target_group_arn = aws_lb_target_group.web_app.arn
-  }
-  condition {
-    path_pattern {
-      values = ["/vrush"]
-    }
-  }    
-}
+
+

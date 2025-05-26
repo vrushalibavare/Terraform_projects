@@ -26,7 +26,7 @@ variable "vpc_id" {
 variable "public_subnet" {
   description = "Whether to create resources in a public subnet"
   type        = bool
-  default     = false
+  default     = true
   
 }
 
@@ -37,9 +37,5 @@ variable "key_name" {
   
 }
 
-variable "alb_listener_arn" {
-  description = "ARN of the ALB listener"
-  type        = string
-  default     = ""
-  
-}
+
+

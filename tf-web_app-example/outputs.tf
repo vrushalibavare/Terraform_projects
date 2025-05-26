@@ -1,15 +1,17 @@
 output "listener_url" {
   description = "URL for the web application listener with path"
-  value       = module.web_app.listener_url
+  value       = "http://${module.alb.dns_name}"
 }
 
-output "alb_listener_arn" {
-  description = "ARN of the ALB listener"
-  value       = module.web_app.alb_listener_arn
-  
+output "alb_dns_name" {
+  description = "DNS name of the load balancer"
+  value       = module.alb.dns_name
 }
-output "alb_arn" {
-  description = "ARN of the ALB"
-  value       = module.web_app.alb_arn
+
+output "vrush_app_url" {
+  description = "URL for the web application with the vrush path"
+  value       = "http://${module.alb.dns_name}/vrush"
 }
+
+
 
