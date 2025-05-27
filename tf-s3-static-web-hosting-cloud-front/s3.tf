@@ -12,6 +12,29 @@ resource "aws_s3_bucket_public_access_block" "private_access" {
   restrict_public_buckets = true
 }
 
+# S3 bucket policy to allow access from CloudFront OAC
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.static_bucket.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = "s3:GetObject"
+        Effect   = "Allow"
+        Resource = "${aws_s3_bucket.static_bucket.arn}/*"
+        Principal = {
+          Service = "cloudfront.amazonaws.com"
+        }
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = aws_cloudfront_distribution.static_distribution.arn
+          }
+        }
+      }
+    ]
+  })
+}
+
 
 # This resource will execute the upload script after the S3 bucket is created
 resource "null_resource" "upload_to_s3" {
@@ -72,12 +95,8 @@ data "aws_cloudfront_cache_policy" "caching_optimized" {
 resource aws_cloudfront_distribution static_distribution {
   origin {
     domain_name = aws_s3_bucket.static_bucket.bucket_regional_domain_name
- 
     origin_id   = "static_bucket"
-
-    s3_origin_config {
-      origin_access_identity = "origin-access-identity/cloudfront/EPBZBQXJXZQ7H"
-    }
+    origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
   }
 
   enabled             = true
@@ -94,10 +113,12 @@ resource aws_cloudfront_distribution static_distribution {
     cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized.id
     
     viewer_protocol_policy = "redirect-to-https"
-    compress               = true
+    compress               = false
   }
 
-  price_class = "PriceClass_100"
+  
+  price_class = "PriceClass_All"
+  web_acl_id = null
 
   viewer_certificate {
     acm_certificate_arn      = module.acm.acm_certificate_arn
@@ -109,5 +130,18 @@ resource aws_cloudfront_distribution static_distribution {
     geo_restriction {
       restriction_type = "none"
     }
+  }
+}
+
+# Route 53 A record pointing to CloudFront distribution
+resource "aws_route53_record" "website" {
+  zone_id = "Z00541411T1NGPV97B5C0"  # Same zone ID used in ACM module
+  name    = "${var.name}.sctp-sandbox.com"
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.static_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.static_distribution.hosted_zone_id
+    evaluate_target_health = false
   }
 }
