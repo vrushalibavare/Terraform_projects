@@ -119,7 +119,7 @@ resource aws_cloudfront_distribution static_distribution {
 
   
   price_class = "PriceClass_All"
-  web_acl_id = null
+  web_acl_id = aws_wafv2_web_acl.cloudfront_waf.arn
 
   viewer_certificate {
     acm_certificate_arn      = module.acm.acm_certificate_arn
