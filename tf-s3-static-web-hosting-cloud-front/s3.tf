@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "static_bucket" {
   force_destroy = true
 }
 
-tresource "aws_s3_bucket_public_access_block" "private_access" {
+resource "aws_s3_bucket_public_access_block" "private_access" {
   bucket = aws_s3_bucket.static_bucket.id
 
   block_public_acls       = true  
