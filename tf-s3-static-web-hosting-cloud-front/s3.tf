@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "static_bucket" {
   force_destroy = true
 }
 
-resource "aws_s3_bucket_public_access_block" "private_access" {
+tresource "aws_s3_bucket_public_access_block" "private_access" {
   bucket = aws_s3_bucket.static_bucket.id
 
   block_public_acls       = true  
@@ -15,6 +15,7 @@ resource "aws_s3_bucket_public_access_block" "private_access" {
 # S3 bucket policy to allow access from CloudFront OAC
 resource "aws_s3_bucket_policy" "bucket_policy" {
   bucket = aws_s3_bucket.static_bucket.id
+  #depends_on = [aws_cloudfront_distribution.static_distribution]
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
