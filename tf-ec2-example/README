@@ -11,3 +11,7 @@ public_instance - default set to true to launch the instance in the public subne
 
 The data.tf file contains the information of the vpc and subnets that are to be selected to launch the EC2 instances.
 Remember to change the vpcid and subnet information if you want to launch the ec2 instances in different vpc.
+
+
+If instances are launched in the private subnet then remember to create a NAT gateway in the public subnet and update the route table of the private subnet to route internet traffic through the NAT gateway.
+If instances in the private subnet are need to accessed over the internet then add a load balancer.
