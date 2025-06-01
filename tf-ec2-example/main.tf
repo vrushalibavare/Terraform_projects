@@ -1,42 +1,59 @@
+locals {
+  selected_subnet_ids = var.public_subnet ? data.aws_subnets.public.ids : data.aws_subnets.private.ids
+}
+
 resource "aws_instance" "public" {
   ami = data.aws_ami.latest_amazon_linux.id
   instance_type = var.instance_type
-  subnet_id = data.aws_subnet.selected.id
-  associate_public_ip_address = true
+  count = var.instance_count
+  subnet_id = local.selected_subnet_ids[count.index % length(local.selected_subnet_ids)]
+  associate_public_ip_address = var.public_subnet
+  # Assigns a public IP address to the instance, if public_subnet is set to true.
   key_name = var.key_name
-  vpc_security_group_ids = [ aws_security_group.allow_ssh.id ]
-  user_data = var.user_data
+  vpc_security_group_ids = [ aws_security_group.allow_ssh_http.id ]
+  user_data = templatefile("${path.module}/scripts/install_httpd.sh",
+  {
+    file_content = "Terraform EC2-#${count.index + 1}"
+  }
+  )
   tags = {
-    Name = "${var.name}-ec2"
+    Name = "${var.name}-${count.index + 1}"
   }
 }
 
-resource "aws_security_group" "allow_ssh" {
-  name = "vrush-terraform-security-group"
-  description = "allow ssh inbound"
+resource "aws_security_group" "allow_ssh_http" {
+  name = "${var.name}-security-group"
+  description = "allow ssh and http inbound"
   vpc_id = data.aws_vpc.selected.id
-  
+  ingress {
+    description = "SSH"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "HTTP"
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  } 
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_tls_ip4" {
-  
-  security_group_id = aws_security_group.allow_ssh.id
-  cidr_ipv4 = "0.0.0.0/0"
-  from_port = 22
-  ip_protocol = "tcp"
-  to_port = 22
+resource "aws_key_pair" "keypair" {
+  key_name = var.key_name
+  public_key = file(var.public_key_path)
 }
 
-output "instance_publicip" {
-  value = aws_instance.public.public_ip
-}
-output "instance_publicdns" {
-  value = aws_instance.public.public_dns
-}
-output "instance_id" {
-  value = aws_instance.public.id
-}
 
-output "instance_az" {
-  value = aws_instance.public.availability_zone
-}
+

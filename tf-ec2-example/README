@@ -1,1 +1,12 @@
-This file use terraform to create an ec2 instance
+This project uses terraform to create an ec2 instance
+Variables to supply -
+name - name of the instance
+instance_type - default set to t2-micro
+key_name - SSH key to be used .Default is ec2-key in the path "~/.ssh/ec2-key.pub"  
+\***\* If a different key name is used please ensure to generate the appropriate ssh key using the command
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/key_name **\*\*\*\*\*\*\*
+count - default set to 1
+public_instance - default set to true to launch the instance in the public subnet. Change to false toggle instance to private subnet.
+
+The data.tf file contains the information of the vpc and subnets that are to be selected to launch the EC2 instances.
+Remember to change the vpcid and subnet information if you want to launch the ec2 instances in different vpc.
