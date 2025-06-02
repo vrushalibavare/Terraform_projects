@@ -1,5 +1,6 @@
 # Exclude tf-local-git-ignore folder
 tf-local-git-ignore/
+tf-multivpc-ec2/
 
 # Terraform common ignores
 **/.terraform/*
