@@ -1,5 +1,7 @@
-This project uses terraform to create an ec2 instance
-Variables to supply -
+This project uses terraform to launch ec2 instances ia a vpc.
+
+Input Variables -
+
 name - name of the instance default is set to "vrush-tf-ec2" .
 instance_type - default set to t2-micro
 vpc_id - default set to vpc-0a7c2b7b0f0c6e4c0 (vrushali-vpc)
