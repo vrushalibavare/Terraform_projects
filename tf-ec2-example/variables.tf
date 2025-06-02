@@ -10,13 +10,13 @@ variable instance_type {
   default = "t2.micro"
 }
 
- variable "key_name" {
+variable "key_name" {
   type = string
   description = "SSH key name"
   default = "ec2-key"
 }
 
- variable instance_count {
+variable instance_count {
   type        = number
   description = "Number of EC2 instances to create"
   default     = 2
@@ -32,4 +32,10 @@ variable "public_subnet"{
   type = bool
   description = "Whether to use a public subnet for the EC2 instance"
   default = true
+}
+
+variable "vpc_id" {
+  type = string
+  description = "ID of the VPC to launch instances in"
+  default = "vpc-0b0b68bfad1955fc4" # Deafault ID of vrushali-vpc
 }

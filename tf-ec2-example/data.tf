@@ -1,8 +1,5 @@
 data "aws_vpc" "selected" {
-  filter {
-    name   = "tag:Name"
-    values = ["vrush*"]
-  }
+  id = var.vpc_id
 }
 
 data "aws_subnets" "public" {
@@ -41,4 +38,3 @@ data aws_ami "latest_amazon_linux" {
     values = ["al2023-ami-2023*"]
   }
 }
-
