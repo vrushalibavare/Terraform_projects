@@ -10,7 +10,7 @@ resource "aws_instance" "public" {
   associate_public_ip_address = var.public_subnet
   # Assigns a public IP address to the instance, if public_subnet is set to true.
   key_name = var.key_name
-  vpc_security_group_ids = [ aws_security_group.allow_ssh_http.id ]
+  vpc_security_group_ids = [ aws_security_group.allow_ssh_http[count.index].id ]
   user_data = templatefile("${path.module}/scripts/install_httpd.sh",
   {
     file_content = "Terraform EC2-#${count.index + 1}"
@@ -22,7 +22,8 @@ resource "aws_instance" "public" {
 }
 
 resource "aws_security_group" "allow_ssh_http" {
-  name = "${var.name}-security-group"
+  count = var.instance_count
+  name = "${var.name}-${count.index + 1}-security-group"
   description = "allow ssh and http inbound"
   vpc_id = data.aws_vpc.selected.id
   ingress {
