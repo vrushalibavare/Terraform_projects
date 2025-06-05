@@ -4,3 +4,10 @@ variable "region" {
   default     = "ap-southeast-1"
   
 }
+
+variable "name" {
+  description = "The name of the VPC"
+  type        = string
+  default     = "vrushali-vpc"
+  
+}
