@@ -9,6 +9,7 @@ module "vpc1" {
   enable_nat_gateway = true
   single_nat_gateway = true
   enable_dns_hostnames = true
+  enable_dns_support = true
   tags = {
     terraform = "true"
   }
@@ -25,6 +26,7 @@ module "vpc2" {
   enable_nat_gateway = true
   single_nat_gateway = true
   enable_dns_hostnames = true
+  enable_dns_support = true
   tags = {
     terraform = "true"
   }
@@ -63,6 +65,14 @@ resource aws_vpc_peering_connection "vpc1-vpc2-peering" {
   vpc_id = module.vpc1.vpc_id
   peer_vpc_id = module.vpc2.vpc_id
   auto_accept = true
+
+  accepter {
+    allow_remote_vpc_dns_resolution = true
+  }
+
+  requester {
+    allow_remote_vpc_dns_resolution = true
+  }
 
   tags = {
     Name = "vrush-vpc1-vpc2-peering"
