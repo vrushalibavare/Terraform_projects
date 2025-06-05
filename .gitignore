@@ -1,5 +1,7 @@
 # Exclude tf-local-git-ignore folder
 tf-local-git-ignore/
+tf-lambda-s3-trigger/
+tf-lambda-rds/
 
 
 # Terraform common ignores
