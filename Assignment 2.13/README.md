@@ -79,3 +79,10 @@ Lambda functions (and their code)
 API Gateway endpoints directly tied to specific functions
 DynamoDB tables or other serverless data stores that are exclusive to a single application
 Event sources (e.g., SQS queues or SNS topics consumed directly by the application's functions)
+
+Example - An E-commerce application that handles customer orders , manages inventory , handles authentiction and gives personalized recommendations
+
+In this scenario, Terraform can be used to build the foundational infrastructure like VPC, Database , Cloud front distribution of static content , storage like S3 for storing product images and other information and SQS queue for order processing
+
+Serverless framework can be used to build the applications that handle order processing by focussing on the business logic and not worrying about the underlying infrastructure.
+Also by using serverless framework to deploy these functions , cost is optimised and scalabilty is acheived to cater to peak sale periods.
