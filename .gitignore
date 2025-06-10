@@ -1,5 +1,8 @@
 # Exclude tf-local-git-ignore folder
 tf-local-git-ignore/
+tf-sns-lambda/
+tf-sqs-lambda/
+tf-httpapi-lambda-dynamodb/
 
 
 
