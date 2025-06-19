@@ -2,7 +2,6 @@
 tf-local-git-ignore/
 tf-sns-lambda/
 tf-sqs-lambda/
-tf-httpapi-lambda-dynamodb/
 tf-secret-manager/
 
 
