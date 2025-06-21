@@ -9,7 +9,7 @@ resource "aws_instance" "public" {
   subnet_id = local.selected_subnet_ids[count.index % length(local.selected_subnet_ids)]
   associate_public_ip_address = var.public_subnet
   # Assigns a public IP address to the instance, if public_subnet is set to true.
-  key_name = var.key_name
+  #key_name = var.key_name
   vpc_security_group_ids = [ aws_security_group.allow_ssh_http[count.index].id ]
   user_data = templatefile("${path.module}/scripts/install_httpd.sh",
   {
@@ -51,10 +51,10 @@ resource "aws_security_group" "allow_ssh_http" {
   }
 }
 
-resource "aws_key_pair" "keypair" {
-  key_name = var.key_name
-  public_key = file(var.public_key_path)
-}
+#resource "aws_key_pair" "keypair" {
+ # key_name = var.key_name
+  #public_key = file(var.public_key_path)
+#}
 
 
 
