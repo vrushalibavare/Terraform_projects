@@ -19,7 +19,7 @@ variable "key_name" {
 variable instance_count {
   type        = number
   description = "Number of EC2 instances to create"
-  default     = 2
+  default     = 1
 }
 
 variable "public_key_path" {
@@ -37,5 +37,5 @@ variable "public_subnet"{
 variable "vpc_id" {
   type = string
   description = "ID of the VPC to launch instances in"
-  default = "vpc-0b0b68bfad1955fc4" # Deafault ID of vrushali-vpc
+  default = "vpc-007578610a8dcae22" # Deafault ID of vrushali-vpc
 }
