@@ -4,6 +4,7 @@ tf-sns-lambda/
 tf-sqs-lambda/
 tf-secret-manager/
 tf-securitygroup-example/
+tf-rds-example/
 
 
 
