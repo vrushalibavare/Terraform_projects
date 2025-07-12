@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Terraform_projects
 
 CE_10 Terraform project files
@@ -8,3 +9,7 @@ If the EC2 instances are launched in the private subnet the ensure to configure 
 assign_public_ip to allow proper routing through natgw.
 A load balancer module is called to run in the public subnets and a target group is creted to register the webap ec2 instances.
 The load balancer url is then accessed from the browser.
+=======
+# tf-url-shortener
+URL shortener REPO
+>>>>>>> ff5c7903f8b9e627467d98fb6c2add5df776ebc1
