@@ -52,4 +52,6 @@ module "eks" {
       desired_size   = 3
     }
   }
+
+  depends_on = [module.vpc]
 }
